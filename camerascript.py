@@ -1,5 +1,6 @@
 import cv2
 import os
+from os import system
 from time import sleep
 
 cam= cv2.VideoCapture(0)
@@ -21,4 +22,8 @@ for i in range(3):
     sleep(10)
 
 cam.release()
+
+#create animation with ImageMagick 
+# system('convert  -delay 10 -loop 0 image*.jpg animation.gif')
+
 cv2.destroyAllWindows()
