@@ -1,10 +1,11 @@
 import cv2
 import os
+import imageio
 from os import system
 from time import sleep
 
 cam= cv2.VideoCapture(0)
-directory = r'C:\Users\MegaN\Documents\Fulvous\Fulvous'
+directory = r'/home/megan/pi'
 
 # show test shot
 while True:
@@ -21,9 +22,10 @@ for i in range(3):
     cv2.imwrite('imagetest{0:04d}.jpg'.format(i), image)
     sleep(10)
 
+with imageio.get_writer('timelapse.gif', mode='I') as writer:
+    
+
 cam.release()
 
-#create animation with ImageMagick 
+#create animation with ImageMagick goal 600 sleep and 50 photos
 # system('convert  -delay 10 -loop 0 image*.jpg animation.gif')
-
-cv2.destroyAllWindows()
