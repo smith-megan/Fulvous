@@ -6,26 +6,29 @@ from time import sleep
 
 cam= cv2.VideoCapture(0)
 directory = r'/home/megan/pi'
+frames=[]
 
 # show test shot
 while True:
     ret, image = cam.read()
-    cv2.imshow('Imagetest' ,image)
+    cv2.imshow('Imagetest' ,image)    
     k = cv2.waitKey(1)
     if k != -1:
         break
 os.chdir(directory)
 
 # start timelapse
-for i in range(3):
+for i in range(4):
     ret, image = cam.read()
-    cv2.imwrite('imagetest{0:04d}.jpg'.format(i), image)
+    cv2.imwrite('imagetest{0:04d}.png'.format(i), image)
+    frames.append(image)
     sleep(10)
 
 with imageio.get_writer('timelapse.gif', mode='I') as writer:
-    
+    for idx, frame in enumerate(frames):
+        print('adding frame to Gif file'), idx+1
+        #change color mode from BGR to RGB to remove blue tint
+        rgb_frame=cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        writer.append_data(rgb_frame)
 
 cam.release()
-
-#create animation with ImageMagick goal 600 sleep and 50 photos
-# system('convert  -delay 10 -loop 0 image*.jpg animation.gif')
